@@ -59,35 +59,44 @@ int judge_result(const int user, const int computer)
 
     return (user - computer + 4) % 3 - 1;
 }
+// 全局得分统计
+static int user_score = 0;
+static int computer_score = 0;
+static int draw_count = 0;
+
 int main(void)
 {
+    const char gesture[3][10] = {"scissor", "stone", "cloth"};
+    int user, computer, result;
 
+    srand(time(NULL));
 
-	const char gesture[3][10] = { "scissor", "stone", "cloth" };
-	int user, computer, result;
-        // 尝试修改手势映射表，编译器会报错
+    while (1) {
+        user = get_user_gesture();
+        if (user == -1)
+            continue;
 
-	srand(time(NULL));
+        computer = get_computer_gesture();
 
-	while (1) {
-		user = get_user_gesture();
-		if (user == -1)
-			continue;
+        printf("Your gesture: %s\tComputer's gesture: %s\n",
+               gesture[user], gesture[computer]);
 
-		computer = get_computer_gesture();
+        result = judge_result(user, computer);
+        if (result > 0) {
+            printf("You win!\n");
+            user_score++;
+        } else if (result == 0) {
+            printf("Draw!\n");
+            draw_count++;
+        } else {
+            printf("You lose!\n");
+            computer_score++;
+        }
 
-		printf("Your gesture: %s\tComputer's gesture: %s\n",
-		       gesture[user], gesture[computer]);
+        // 打印当前得分
+        printf("Current Score: You %d - %d Computer (Draw: %d)\n",
+               user_score, computer_score, draw_count);
+    }
 
-		result = judge_result(user, computer);
-		if (result > 0)
-			printf("You win!\n");
-		else if (result == 0)
-			printf("Draw!\n");
-		else
-			printf("You lose!\n");
-	}
-// 这是一个测试改动
-
-	return 0;
+    return 0;
 }
