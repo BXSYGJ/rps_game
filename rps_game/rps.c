@@ -87,6 +87,7 @@ int main(void)
 		else
 			printf("You lose!\n");
 	}
+// 这是一个测试改动
 
 	return 0;
 }
