@@ -29,7 +29,7 @@ int get_user_gesture(void)
 		while (getchar() != '\n');
 		return -1;
 	}
-
+// 这是在Github上在线修改的代码
 	return input;
 }
 
